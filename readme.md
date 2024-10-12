@@ -2,6 +2,9 @@
 
 This project aims to classify the emotions expressed in text data using machine learning techniques. The dataset contains text samples labeled with emotions such as joy, sadness, fear, anger, surprise, neutral, disgust, and shame.
 
+## Demo
+![image](https://github.com/user-attachments/assets/caef8381-8157-4dd0-bee6-80c1019127fd)
+
 ## Dataset Overview
 
 The dataset consists of two main columns:
