@@ -1,61 +1,58 @@
-# Text-based Emotion Detection
+# Text Emotion Classifier
 
-This project aims to classify the emotions expressed in text data using machine learning techniques. The dataset contains text samples labeled with emotions such as joy, sadness, fear, anger, surprise, neutral, disgust, and shame.
+**Explore how a saved text-classification pipeline labels short passages.**
 
-## Demo
-![image](https://github.com/user-attachments/assets/caef8381-8157-4dd0-bee6-80c1019127fd)
+Enter text to see a predicted emotion, an emoji, and a chart of model probabilities. This project demonstrates the final application layer of a text-classification experiment: load a trained pipeline, collect user input, run inference, and explain the output visually.
 
-## Dataset Overview
+## Features
 
-The dataset consists of two main columns:
+- A Streamlit form for text input.
+- A saved pipeline loaded from `model/text_emotion.pkl`.
+- Predicted emotion and maximum model probability.
+- An Altair bar chart showing probabilities across the model's classes.
+- A training notebook and an included labeled text dataset.
 
-- **Emotion:** The emotion category associated with each text sample.
-- **Text:** The text content expressing various emotions.
+## Preview
 
-Here is a summary of the emotions and their respective counts in the dataset:
+![Existing text-emotion application screenshot](https://github.com/user-attachments/assets/caef8381-8157-4dd0-bee6-80c1019127fd)
 
-- 😄 Joy: 11045
-- 😢 Sadness: 6722
-- 😨 Fear: 5410
-- 😠 Anger: 4297
-- 😲 Surprise: 4062
-- 😐 Neutral: 2254
-- 🤢 Disgust: 856
-- 😔 Shame: 146
+## Architecture
 
-## Preprocessing
-
-Before training the machine learning model, the text data underwent preprocessing, including:
-
-- Removal of special characters, URLs, emails, and irrelevant symbols.
-- Conversion to lowercase.
-- Removal of stopwords.
-- Lemmatization or stemming to reduce words to their base form.
-
-## Model Training
-
-A logistic regression model was trained using scikit-learn library. The features used for training were derived from the preprocessed text data. The model achieved an accuracy of approximately 62% on the test dataset.
-
-**Note:** Due to convergence issues, it's recommended to increase the number of iterations or consider scaling the data.
-
-## Requirements
-
-Ensure you have the following dependencies installed:
-
-- scikit-learn
-- pandas
-- numpy
-
-You can install the dependencies using the following command:
-
-```bash
-pip install -r requirements.txt
+```mermaid
+flowchart LR
+  Text[Submitted text] --> Pipeline[Saved text-emotion pipeline]
+  Pipeline --> Label[Predicted label and emoji]
+  Pipeline --> Probabilities[Class probabilities]
+  Probabilities --> Chart[Altair chart in Streamlit]
 ```
 
-## Usage
-To use the trained model for emotion detection, follow these steps:
+## Run locally
 
-- Install the required dependencies.
-- Load the trained model.
-- Preprocess the input text data.
-- Use the model to predict the emotions associated with the text data.
+Download and extract the repository. Run from its root so the model path resolves:
+
+```bash
+python -m pip install -r reqiurements.txt
+python -m pip install streamlit numpy altair joblib
+python -m streamlit run app.py
+```
+
+The dependency filename is intentionally shown as committed: `reqiurements.txt`. It pins older scikit-learn and Pandas versions, so use a compatible Python environment. The serialized pipeline may require the same library versions used in training.
+
+## Example
+
+Enter a short sentence such as “I am excited to see my friends” and submit it. The app displays the model's predicted label and probability distribution. Those probabilities are model outputs, not a verified measurement of the author's emotional state.
+
+## Repository guide
+
+| Path | Purpose |
+|---|---|
+| [app.py](app.py) | Input form, inference, and probability chart |
+| [Training notebook](emotion%20based%20text%20classifier.ipynb) | Model-development experiment |
+| `data/emotion_dataset_2.csv` | Labeled emotion/text data |
+| `model/text_emotion.pkl` | Saved inference pipeline |
+
+## Evaluation and limitations
+
+The earlier project notes reported approximately 62% test accuracy. Treat that as a historical experiment note, not a reproduced benchmark: inspect the notebook's split, preprocessing, and environment before comparing results. Dataset class balance and wording can affect predictions. This is an NLP learning demo, not a mental-health assessment tool.
+
+Load pickle-based artifacts only from trusted sources. Contributions that reproduce evaluation and complete the dependency specification are welcome.
